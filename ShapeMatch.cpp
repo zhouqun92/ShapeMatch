@@ -15,7 +15,7 @@ int ShapeMatch::CreateMatchModel(IplImage *templateArr, double maxContrast, doub
 	int scalenum = abs(scaleend - scalestart) / scalestep+1;
 	int anglenum = abs(angleend - anglestart) / anglestep+1;
 	scaleEdgePoints = (ScaleEdgePoints *)malloc(scalenum * sizeof(ScaleEdgePoints));
-    ////ÇóÄ£°åÖØĞÄ
+    ////æ±‚æ¨¡æ¿é‡å¿ƒ
 	gravityPoint = extract_shape_info(templateArr, maxContrast, minContrast);
 	////
 	for (int i = 0; i < scalenum; i++)
@@ -156,7 +156,7 @@ int ShapeMatch::CalEdgeCordinates(IplImage *templateArr, double maxContrast, dou
 	}
 
 	count = 0; // init count
-			   // non maximum suppression·Ç¼«´óÖµÒÖÖÆ
+			   // non maximum suppressionéæå¤§å€¼æŠ‘åˆ¶
 	double leftPixel, rightPixel;
 
 	for (i = 1; i < Ssize.height - 1; i++)
@@ -197,7 +197,7 @@ int ShapeMatch::CalEdgeCordinates(IplImage *templateArr, double maxContrast, dou
 	int curX, curY;
 	int flag = 1;
 
-	//Hysterisis thresholdÖÍºóãĞÖµ
+	//Hysterisis thresholdæ»åé˜ˆå€¼
 	for (i = 1; i < Ssize.height - 1; i++)
 	{
 		for (j = 1; j < Ssize.width; j++)
@@ -337,7 +337,7 @@ double ShapeMatch::FindGeoMatchModel(IplImage* srcarr, double minScore, double g
 	double resultScore = 0;
 	double maxScore=0;
 	int maxScoreId=0;
-	PyramidEdgePoints *matchEdgePoints=new PyramidEdgePoints;///////////ÔİÊ±×¢ÊÍ
+	PyramidEdgePoints *matchEdgePoints=new PyramidEdgePoints;///////////æš‚æ—¶æ³¨é‡Š
 	double partialSum = 0;
 	double sumOfCoords = 0;
 	double partialScore;
@@ -402,7 +402,7 @@ double ShapeMatch::FindGeoMatchModel(IplImage* srcarr, double minScore, double g
 			{
 				ResultList->CenterLocX = 0;
 				ResultList->CenterLocY = 0;
-				shape_match_accurate(pyDownImgArr[kk].img, &(pyramidEdgePtr[kk]),80, 20,/////80£¬20²ÎÊı´ıĞŞ¸Ä
+				shape_match_accurate(pyDownImgArr[kk].img, &(pyramidEdgePtr[kk]),80, 20,/////80ï¼Œ20å‚æ•°å¾…ä¿®æ”¹
 					minScore, greediness,SearchRegion,ResultList, &(imgEdgeInfo[kk]));
 				if (ResultList->CenterLocX == 0 || ResultList->CenterLocY == 0)
 				{
@@ -423,7 +423,7 @@ double ShapeMatch::FindGeoMatchModel(IplImage* srcarr, double minScore, double g
 				{
 					maxScore = resultScore;
 					maxScoreId = matcnnums;
-					matchEdgePoints = &(pyramidEdgePtr[0]);//////////////////////ÔİÊ±×¢ÊÍ
+					matchEdgePoints = &(pyramidEdgePtr[0]);//////////////////////æš‚æ—¶æ³¨é‡Š
 				}
 				ResultLists[matcnnums].ResultScore = resultScore;
 				ResultLists[matcnnums].CenterLocX= ResultList->CenterLocX ;
@@ -441,15 +441,15 @@ double ShapeMatch::FindGeoMatchModel(IplImage* srcarr, double minScore, double g
 	}
 	//if (matcnnums > 0)
 	//{
-	//	cout << "×îÆ¥Åä------------------------------------" << endl;
-	//	cout << "·ÖÊı:" << ResultLists[maxScoreId].ResultScore << endl;
+	//	cout << "æœ€åŒ¹é…------------------------------------" << endl;
+	//	cout << "åˆ†æ•°:" << ResultLists[maxScoreId].ResultScore << endl;
 	//	cout << "x:" << ResultLists[maxScoreId].CenterLocX << endl;
 	//	cout << "y:" << ResultLists[maxScoreId].CenterLocY << endl;
-	//	cout << "Ëõ·ÅÏµÊı£º" << ResultLists[maxScoreId].scale << endl;
-	//	cout << "½Ç¶È£º" << ResultLists[maxScoreId].Angel << endl;
+	//	cout << "ç¼©æ”¾ç³»æ•°ï¼š" << ResultLists[maxScoreId].scale << endl;
+	//	cout << "è§’åº¦ï¼š" << ResultLists[maxScoreId].Angel << endl;
 	//	cout << endl;
 
-	//}///ÔİÊ±×¢ÊÍ
+	//}///æš‚æ—¶æ³¨é‡Š
 
 	if (matcnnums > 0)
 	{
@@ -467,7 +467,7 @@ double ShapeMatch::FindGeoMatchModel(IplImage* srcarr, double minScore, double g
 	///////
 	//delete matchEdgePoints;
 	//////
-	/////ÊÍ·ÅÄÚ´æ
+	/////é‡Šæ”¾å†…å­˜è¿™é‡Œæ˜¯pyramidnums=3,é‡‘å­—å¡”å±‚æ•°pyramidnumsæ”¹å˜æ—¶è‡ªå·±ç¨å¾®ä¿®æ”¹ä¸‹å§
 	free(imgEdgeInfo[0].pBufGradX); free(imgEdgeInfo[0].pBufGradY); free(imgEdgeInfo[0].pBufMag); imgEdgeInfo[0].pBufGradX = NULL; imgEdgeInfo[0].pBufGradY = NULL; imgEdgeInfo[0].pBufMag = NULL;
 	free(imgEdgeInfo[1].pBufGradX); free(imgEdgeInfo[1].pBufGradY); free(imgEdgeInfo[1].pBufMag); imgEdgeInfo[1].pBufGradX = NULL; imgEdgeInfo[1].pBufGradY = NULL; imgEdgeInfo[1].pBufMag = NULL;
 	free(imgEdgeInfo[2].pBufGradX); free(imgEdgeInfo[2].pBufGradY); free(imgEdgeInfo[2].pBufMag); imgEdgeInfo[2].pBufGradX = NULL; imgEdgeInfo[2].pBufGradY = NULL; imgEdgeInfo[2].pBufMag = NULL;
@@ -497,7 +497,7 @@ void ShapeMatch::DrawContours(IplImage* source, CvScalar color, int lineWidth, P
 
 
 
-/////////////////////ÌáÈ¡ÂÖÀª
+/////////////////////æå–è½®å»“
 void ShapeMatch::extract_shape_info(IplImage *ImageData, PyramidEdgePoints *PyramidEdgePtr, int Contrast, int MinContrast)
 {
 
@@ -708,7 +708,7 @@ void ShapeMatch::extract_shape_info(IplImage *ImageData, PyramidEdgePoints *Pyra
 	free(pInput);
 }
 
-/////////////////////ÌáÈ¡ÖØĞÄ
+/////////////////////æå–é‡å¿ƒ
 Point ShapeMatch::extract_shape_info(IplImage *ImageData, int Contrast, int MinContrast)
 {
 	Point gravity = Point(0, 0);
@@ -919,7 +919,7 @@ Point ShapeMatch::extract_shape_info(IplImage *ImageData, int Contrast, int MinC
 
 /////////////////////
 
-///////ÂÖÀªÆ¥Åä
+///////è½®å»“åŒ¹é…
 void ShapeMatch::shape_match_accurate(IplImage *SearchImage, PyramidEdgePoints *ShapeInfoVec, int Contrast, int MinContrast, float MinScore, float Greediness, search_region *SearchRegion, MatchResult *ResultList, ImgEdgeInfo *imgEdgeInfo)
 {
 	/* source image size */
